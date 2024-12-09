@@ -25,6 +25,8 @@ impl AnyQuacker {
 
     // This compiled fine in PyO3 0.21, but pyclasses can no longer be passed without
     // being wrapped in something like Py or Bound.
+    //
+    // Error: the trait `Clone` is not implemented for `PyDuck`, which is required by `PyDuck: PyFunctionArgument<'_, '_>`
     #[classmethod]
     fn python_quacker(_cls: &Bound<'_, PyType>, obj: PyDuck) -> Self {
         Self {
@@ -35,6 +37,8 @@ impl AnyQuacker {
     // The signature is now correct for PyO3 0.22, and the function only accepts
     // PyDuck objects, but we can't store Py<PyDuck> in our Box because it doesn't
     // implement Quacker..
+    //
+    // Error: the trait `Quacker` is not implemented for `pyo3::Py<PyDuck>`
     #[classmethod]
     fn python_quacker_0_22(_cls: &Bound<'_, PyType>, obj: Py<PyDuck>) -> Self {
         Self {
